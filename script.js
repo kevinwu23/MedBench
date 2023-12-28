@@ -1,20 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
-    loadData();
-});
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('https://kevinwu23.github.io/citations.csv')
+        .then(response => response.text())
+        .then(data => {
+            // Parse the CSV data to get the URL
+            let lines = data.split("\n");
+            // Assuming URL is on the first line of the CSV
+            let url = lines[0].trim();
 
-function loadData() {
-    // Use AJAX or Fetch API to load CSV data
-    // Randomly select a row and update statement and iframe src
-    // Example:
-    document.getElementById('statement').innerText = 'Sample Statement';
-    document.getElementById('contentFrame').src = 'https://example.com';
-}
-
-document.getElementById('saveButton').addEventListener('click', function() {
-    var statement = document.getElementById('statement').innerText;
-    var containsCitation = document.getElementById('citationCheck').checked;
-    var notes = document.getElementById('notes').value;
-
-    // Code to save these values to another CSV
-    // You might need a server-side script to handle file operations
+            // Set the URL to the iframe's src attribute
+            document.getElementById("contentFrame").src = url;
+        })
+        .catch(error => console.error('Error fetching the CSV:', error));
 });
